@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #nav {
+        height: auto;
+        width: 100%;
+        margin: auto;
+        display: flex;
+        justify-content: space-evenly;
+        background-color: black;
+        align-items: center;
+      }
+      h1 {
+        color: white;
+      }
+      #cont{
+        width:90%;
+        height:auto;
+      display:grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 10px;
+      }
+      #cont>div{
+        width: 70%;
+        height:290px;
+        padding:5px;
+        text-align: center;
+        margin: 20px auto;
+        border-radius: 10px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+      #cont > div > img{
+        width: 100px;
+        height: 100px;
+      }
+      #cont>div>h2{
+        font-size: 20px;
+      }
+      #cont>div>p{
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="nav">
+      <h1>Product Listing Page</h1>
+      <div>
+        <select name="select" id="">
+          <option value="men's clothing">men's clothing</option>
+          <option value="women's clothing">women's clothing</option>
+          <option value="electronics">electronics</option>
+          <option value="jewelery">jewelery</option>
+        </select>
+      </div>
+      <div id="search">
+        <input type="text" placeholder="Search" />
+        <button>Search</button>
+      </div>
+      <div>
+        <select name="price" id="">
+          <option value="asc">Low to High</option>
+          <option value="desc">High to Low</option>
+        </select>
+      </div>
+    </div>
+    <div id="cont">
+    </div>
+  </body>
+  <script>
+    let nav = document.getElementById("nav");
+    let search = document.getElementById("search");
+    let select = document.getElementById("select");
+    let cont1 = document.getElementById("cont");
+nav.addEventListener("click", function () {
+
+      getData();
+    });
+
+    async function getData() {
+      let url = "https://fakestoreapi.com/products";
+      let response = await fetch(url);
+      let data = await response.json();
+      showData(data);
+    }
+
+    function showData(data) {
+      data.map((ele, index) => {
+        let card = document.createElement("div");
+        let Pimg = document.createElement("img");
+        Pimg.src = ele.image;
+        let Pname = document.createElement("h2");
+        Pname.innerText = ele.title;
+        let Pprice = document.createElement("p");
+        Pprice.innerHTML = ele.price;
+        card.append(Pimg,Pname,Pprice);
+        cont1.append(card);
+      });
+    }
+  </script>
+</html>
